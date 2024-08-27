@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /*.xz$
+Sitemap: https://materials.colabfit.org/sitemap.xml

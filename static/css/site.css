@@ -1,0 +1,85 @@
+footer {
+  color: #ddd;
+  background: #222;
+}
+
+footer li {
+  color: #ccc;
+}
+
+footer a {
+  color: #777;
+}
+
+footer a:link {
+  color: #777;
+}
+
+footer a:visited {
+  color: #777;
+}
+
+footer a:hover {
+  color: #fff;
+}
+
+.new-periodic-table > tbody > tr > td {
+  padding: 0 !important;
+  height: 56px;
+  border: 1px solid rgb(200, 200, 200);
+}
+
+.new-periodic-table td a {
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  display: block;
+  min-height: 56px !important;
+  cursor: pointer;
+
+  text-decoration: none;
+  transition: background-color 200ms linear;
+}
+
+.new-periodic-table td a:hover {
+  background-color: rgba(255, 255, 0, 0.4) !important;
+  color: #000 !important;
+}
+
+.new-periodic-table td a.pt-active {
+  background-color: rgba(255, 255, 0, 0.4) !important;
+  color: #000 !important;
+}
+
+.new-periodic-table .fewitems {
+  opacity: 0.3;
+}
+
+/*
+#621d4b dark magenta
+#9e206c light magenta
+#2f6164 dark cyan
+#4f99b0 blue
+#66c2d7 light blue
+*/
+
+.new-periodic-table a.c1 {
+  background-color: #621d4b;
+  color: #fff;
+}
+
+.new-periodic-table a.c2 {
+  background-color: #9e206c;
+  color: #fff;
+}
+
+.new-periodic-table a.c3 {
+  background-color: #4f99b0;
+  color: #fff;
+}
+
+.new-periodic-table a.c4 {
+  background-color: #2f6164;
+  color: #fff;
+}
+

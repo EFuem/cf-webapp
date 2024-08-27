@@ -1,0 +1,90 @@
+<div class="row" style="margin-top: 1em">
+  <div class="col-6">
+    <div class="card text-center">
+      <div class="card-header">
+        Datasets
+        <i class="fa fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="
+        An organized union of configurations, associated property instances, and metadata for publishing/exploring
+        "></i>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title" id="stats_dataset_count">&nbsp;</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="card text-center">
+      <div class="card-header">
+        Configuration Sets
+        <i class="fa fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="
+        A grouping over like configurations to improve organization and interoperability
+        "></i>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title" id="stats_configuration_set_count">&nbsp;</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="row">
+  <div class="col-6">
+    <div class="card text-center">
+      <div class="card-header">
+        Property Instances
+        <i class="fa fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="
+        Unique computed property values such as energy, forces, stress, etc.
+        "></i>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title" id="stats_property_instance_count">&nbsp;</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="card text-center">
+      <div class="card-header">
+        Configurations
+        <i class="fa fa-question-circle" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="
+        Unique atomic configuration defined by atomic positions/types, lattice vectors, PBCs
+        "></i>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title" id="stats_configuration_count">&nbsp;</h5>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<div class="row">
+  <div class="col-12">
+    <div class="text-end" style="padding-right: 1em" id="stats_dataset_last_modified">&nbsp;</div>
+  </div>
+</div>
+
+<script>
+let url = 'https://materials.colabfit.org/dbstats.json';
+fetch(url)
+    .then(response => response.json())
+    .then(hsh => {
+      let s = 'dataset_count';
+      document.getElementById(`stats_${s}`).innerText = hsh[s];
+      s = 'configuration_set_count';
+      document.getElementById(`stats_${s}`).innerText = hsh[s];
+      s = 'property_instance_count';
+      document.getElementById(`stats_${s}`).innerText = hsh[s];
+      s = 'configuration_count';
+      document.getElementById(`stats_${s}`).innerText = hsh[s];
+
+      s = 'dataset_last_modified';
+      dt = Date.parse(hsh[s]);
+      const options = { month: "long", year: "numeric" };
+      dt_s = new Intl.DateTimeFormat("default", options).format(dt);
+      document.getElementById(`stats_${s}`).innerText = `Last updated ${dt_s}`;
+    });
+</script>

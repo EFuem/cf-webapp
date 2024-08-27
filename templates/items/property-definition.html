@@ -1,0 +1,70 @@
+{% extends "layouts/item.html" %}
+{% block content %}
+
+<h3>{{ property_id_simple }}</h3>
+
+<br>
+<table class="table table-bordered table-sm">
+  <tr>
+    <th>Property Definition (short name)</th>
+    <td>{{ property_id_simple }}</td>
+  </tr>
+
+  <tr>
+    <th>Property Definition ID</th>
+    <td><a href="{{ property_urlpath }}">{{ property_id }}</a></td>
+  </tr>
+
+  <tr>
+    <th>Property Title</th>
+    <td>{{ item['definition']['property-title'] }}</td>
+  </tr>
+
+  <tr>
+    <th>Property Description</th>
+    <td>{{ item['definition']['property-description'] }}</td>
+  </tr>
+
+  <tr>
+    <th>Creation Date</th>
+    <td>{{ property_id_date }}</td>
+  </tr>
+
+  <tr>
+    <th>Content</th>
+    <td><a href="{{ property_rawpath }}">Property Definition</a></td>
+  </tr>
+</table>
+
+<br>
+
+{% for key,h in item['definition'].items() %}
+
+{% if( key == "property-id" or key == "property-title" or key == "property-name" or key == "property-description" ) %}
+{% else %}
+
+<div class="card border-success">
+  <div class="card-body">
+    <h5 class="card-title"><a href="#key-{{key}}">{{key}}</a></h5>
+
+    <table class="table table-sm">
+    <tbody>
+    <tr><th style="width: 15%">type</th><td>{{ h['type'] }}</td></tr>
+    <tr><th style="width: 15%">has-unit</th><td>{{ h['has-unit'] |tojson}}</td></tr>
+    <tr><th style="width: 15%">extent</th><td>{{ h['extent'] |tojson}}</td></tr>
+    <tr><th style="width: 15%">required</th><td>{{ h['required'] |tojson}}</td></tr>
+    <tr><th style="width: 15%">description</th><td>{{ h['description'] }}</td></tr>
+    </tbody>
+    </table>
+  </div>
+</div>
+<br>
+
+
+
+
+{% endif %}
+
+{% endfor %}
+
+{% endblock %}

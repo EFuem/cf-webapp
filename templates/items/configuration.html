@@ -1,0 +1,57 @@
+{% extends "layouts/item.html" %}
+{% block content %}
+
+<h3>Configuration</h3>
+<h3>{{ item['colabfit-id'] }}</h3>
+<hr>
+<br>
+
+
+<br>
+<table class="table table-bordered table-sm">
+  <tbody>
+    <tr>
+      <th>Names</th>
+      <td>{{ ", ".join( item['names'] ) }}</td>
+    </tr>
+{% include "items/rows/_chemical_formula_hill.html" %}
+    <tr>
+      <th>Configuration Sets</th>
+      <td class="font-monospace">
+{% for id in configuration_set_ids %}
+        <a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <th>Data Objects</th>
+      <td class="font-monospace">
+{% for id in data_object_ids %}
+        <a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+      </td>
+    </tr>
+{% if metadata_ids %}
+    <tr>
+      <th>Metadata</th>
+      <td class="font-monospace">
+{% for id in metadata_ids %}
+        <a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+      </td>
+    </tr>
+{% endif %}
+    <tr>
+      <th>ColabFit ID</th>
+      <td class="font-monospace"><a href="/id/{{ item['colabfit-id'] }}">{{ item['colabfit-id'] }}</a></td>
+    </tr>
+    <tr>
+      <th>Files</th>
+      <td>
+        <a href="/files/{{ item['colabfit-id'] }}/colabfitspec.json">colabfitspec.json</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

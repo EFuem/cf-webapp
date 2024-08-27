@@ -1,0 +1,24 @@
+{% extends "layouts/page.html" %}
+{% block content %}
+
+<h3>Configuration Sets</h3>
+<hr>
+<br>
+
+<p>The following is a list of all {{n}}Configuration Sets available within ColabFit.</p>
+
+<!--
+for large datasets, in iOS browsers this error is generated:
+RangeError: Maximum call stack size exceeded
+-->
+<script>
+window.addEventListener("error", (event) => {
+  s = `${event.message}\n`;
+  alert( s );
+});
+</script>
+<script src="{{ url_for('static', filename='js/cache-configuration-set-' + c + '.js') }}" onerror="alert(this)"></script>
+{% include "browse/_browse-paginate-header.html" %}
+
+
+{% endblock %}

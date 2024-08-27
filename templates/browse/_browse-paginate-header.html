@@ -1,0 +1,36 @@
+<div id="page-navigation-section"/>
+<button onclick="previous_page();" type="button" class="btn btn-primary btn-sm">Previous Page</button>
+<button onclick="next_page();"type="button" class="btn btn-primary btn-sm">Next Page</button>
+
+<select onchange="paginate_table(this.value);" class="form-select form-select-sm" style="display:inline; margin-left: 1em; width: fit-content; vertical-align: middle;" id="page-select">
+  <option>Page ……</option>
+</select>
+<br><br>
+</div>
+
+<script>
+function toggle_full_description() {
+  const cells = document.getElementsByClassName('cell-description');
+  Array.from(cells).forEach((cell) => {
+    if( cell.style['white-space'] != 'nowrap' ) {
+      cell.style['white-space'] = 'nowrap';
+      document.getElementById('description-toggle-button').innerText = "Click to display full Description";
+    } else {
+      cell.style['white-space'] = 'normal';
+      document.getElementById('description-toggle-button').innerText = "Click to hide full Description";
+    }
+  });
+}
+</script>
+
+<button id="description-toggle-button" onclick="toggle_full_description()" class="btn btn-sm btn-primary">Click to display full Description</button>
+<br><br>
+
+<table class="table table-sm table-bordered table-striped">
+  <tbody id="paginated-items">
+  </tbody>
+</table>
+
+
+
+<script src="{{ url_for('static', filename='js/browse-paginate.js') }}"></script>

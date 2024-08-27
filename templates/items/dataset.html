@@ -1,0 +1,212 @@
+{% extends "layouts/item.html" %}
+{% block content %}
+
+<script type="application/ld+json">
+{{schema_org_data|safe}}
+</script>
+
+<h3>Dataset</h3>
+<h3>{{ item['name'] }}</h3>
+<hr>
+<br>
+
+
+
+<a  class="btn btn-primary btn-sm"
+    id="download-dataset-archive"
+    href="https://materials.colabfit.org/dataset-xyz/{{ item['extended-id'] }}.xyz.xz" rel="nofollow noindex">Download Dataset XYZ file</a>
+<br>
+
+{#
+<a  class="btn btn-primary btn-sm"
+    style="margin-top: 0.8em;"
+    id="download-dataset-archive"
+    href="https://s3.colabfit.org/dataset/{{ item['extended-id'] }}.txz" rel="nofollow noindex">Download Complete Dataset</a>
+<br>
+#}
+
+<br>
+<table class="table table-bordered table-sm">
+  <tbody>
+    <tr>
+      <th>Name</th>
+      <td>{{ item['name'] }}</td>
+    </tr>
+    <tr>
+      <th>Extended ID</th>
+      <td class="font-monospace"><a href="/id/{{ item['colabfit-id'] }}">{{ item['extended-id'] }}</a></td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td>{{ item['description'] }}</td>
+    </tr>
+    <tr>
+      <th>Authors</th>
+      <td style="white-space: nowrap;">
+{% for a in item['authors'] %}
+{{a}}<br>
+{% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <th>DOI</th>
+      <td style="white-space: nowrap;">
+{{item['doi']}}
+
+<br>
+<a target=_blank href="https://commons.datacite.org/doi.org/{{item['doi']}}">https://commons.datacite.org/doi.org/{{item['doi']}}</a>
+
+<br>
+<a target=_blank href="https://doi.datacite.org/dois/{{item['doi'] | replace("/","%2F")}}">https://doi.datacite.org/dois/{{item['doi'] | replace("/","%2F")}}</a>
+
+<br>
+<a target=_blank href="https://doi.org/{{item['doi']}}">https://doi.org/{{item['doi']}}</a><br>
+
+<br>
+<span style="font-size: 90%; white-space: wrap">
+Cite as: {{citation_string}}
+<br>
+For other citation formats, see the <a target=_blank href="https://doi.datacite.org/dois/{{item['doi'] | replace("/","%2F")}}">DataCite Fabrica page</a> for this dataset.
+</span>
+
+
+      </td>
+    </tr>
+    <tr>
+      <th>Elements</th>
+      <td style="white-space: nowrap;">
+{% for k,v in item['aggregated_info']['total_elements_ratios'].items() %}
+{{k}} ({{(v*100)|round(2)}}%)<br>
+{% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <th>Number of Data Objects</th>
+      <td>{{ "{:,}".format( data_objects_count ) }}</td>
+    </tr>
+    <tr>
+      <th>Number of Configurations</th>
+      <td>{{ "{:,}".format( item['aggregated_info']['nconfigurations'] ) }}</td>
+    </tr>
+    <tr>
+      <th>Number of Atoms</th>
+      <td>{{ "{:,}".format( item['aggregated_info']['nsites'] ) }}</td>
+    </tr>
+    <tr>
+      <th>Links</th>
+      <td>
+{% if item['links']['source-data'] %}
+<a target=_blank href="{{item['links']['source-data']}}">{{item['links']['source-data']}}</a><br>
+{% endif %}
+
+{% if item['links']['source-publication'] %}
+<a target=_blank href="{{item['links']['source-publication']}}">{{item['links']['source-publication']}}</a><br>
+{% endif %}
+
+{% if item['links']['other'] %}
+{% for s in item['links']['other'] %}
+<a target=_blank href="{{s}}">{{s}}</a><br>
+{% endfor %}
+{% endif %}
+      </td>
+    </tr>
+
+    <tr>
+      <th>Configuration Sets by Name</th>
+      <td>
+{% if configuration_set_ids|length == 0 %}
+(None)
+{% endif %}
+
+{% if configuration_set_ids|length < 15 %}
+{% for h in configuration_set_objects %}
+        <a href="/id/{{h['colabfit-id']}}">{{h['name']}}</a> &mdash; {{h['description']}}<br>
+{% endfor %}
+{% else %}
+<div style="overflow: auto; max-height: 20em; display: none;" id="list-of-configuration-sets">
+{% for h in configuration_set_objects %}
+        <a href="/id/{{h['colabfit-id']}}">{{h['name']}}</a> &mdash; {{h['description']}}<br>
+{% endfor %}
+</div>
+<button id="btn-show-configuration-sets"
+        onclick="show_hide_list('list-of-configuration-sets', this)"
+        class="btn btn-outline-primary">Show Configuration Sets by Name</button>
+      </td>
+{% endif %}
+    </tr>
+
+
+    <tr>
+      <th>Configuration Sets by ID</th>
+      <td class="font-monospace">
+{% if configuration_set_ids|length == 0 %}
+(None)
+{% endif %}
+
+{% if configuration_set_ids|length < 15 %}
+{% for id in configuration_set_ids %}
+        <a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+{% else %}
+<div style="overflow: auto; max-height: 20em; display: none;" id="list-of-configuration-sets-by-id">
+{% for id in configuration_set_ids %}
+        <a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+</div>
+<button id="btn-show-configuration-sets-by-id"
+        onclick="show_hide_list('list-of-configuration-sets-by-id', this)"
+        class="btn btn-outline-primary">Show Configuration Sets</button>
+      </td>
+{% endif %}
+    </tr>
+
+
+
+
+    <tr>
+      <th>Data Objects</th>
+      <td class="font-monospace">
+{% if data_objects_count >= data_object_limit %}
+Too many to display
+{% else %}
+<div style="overflow: auto; max-height: 20em; display: none;" id="list-of-data-objects">
+{% for id in data_object_ids %}
+<a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+</div>
+<button id="btn-show-data-objects"
+        onclick="show_hide_list('list-of-data-objects', this)"
+        class="btn btn-outline-primary">Show Data Objects</button>
+      </td>
+{% endif %}
+    </tr>
+    <tr>
+      <th>ColabFit ID</th>
+      <td class="font-monospace"><a href="/id/{{ item['colabfit-id'] }}">{{ item['colabfit-id'] }}</a></td>
+    </tr>
+    <tr>
+      <th>Files</th>
+      <td>
+        <a href="/files/{{ item['colabfit-id'] }}/colabfitspec.json">colabfitspec.json</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{% if item['colabfit-id'] == "DS_2xm7j6ildi6b_000" %}
+<iframe width="100%" height="800px" src="{{ url_for('static', filename='dataset-summary/MoNbTaVW_PRB2021.html') }}"></iframe>
+{% endif %}
+
+<script>
+/*
+(function() {
+  let e = document.getElementById('download-archive');
+  let s = "{{ item['colabfit-id'] }}";
+  e.href = `/download-dataset/${s}.txz`
+  let e2 = document.getElementById('download-archive2');
+  e2.href = `/download-dataset/${s}.txz`
+})();
+*/
+</script>
+
+{% endblock %}

@@ -1,0 +1,206 @@
+<form action="/" method="get">
+
+  <hr>
+
+  <div class="mb-3 row">
+    <label for="search-name" class="col-4 col-form-label">Name</label>
+    <div class="col-8">
+      <input type="text" pattern="[A-Za-z0-9_\-\.]*" class="form-control" name="search-name" id="search-name" value="{{ request.values.get('search-name', '') }}">
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="search-authors" class="col-4 col-form-label">Authors</label>
+    <div class="col-8">
+      <input type="text" class="form-control" name="search-authors" id="search-authors" value="{{ request.values.get('search-authors', '') }}">
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="search-description" class="col-4 col-form-label">Description</label>
+    <div class="col-8">
+      <input type="text" class="form-control" name="search-description" id="search-description" value="{{ request.values.get('search-description', '') }}">
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="search-doi" class="col-4 col-form-label">Source DOI</label>
+    <div class="col-8">
+      <input type="text" class="form-control" name="search-doi" id="search-doi" value="{{ request.values.get('search-doi', '') }}">
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label for="search-property-types" class="col-4 col-form-label">Property Types</label>
+    <div class="col-8">
+      <select name="search-property-types[]" id="search-property-types" multiple>
+{% for x in existing_property_types %}
+        <option
+        {% if x in param_args.get('property_types') %}
+        selected=selected
+        {% endif %}
+        >{{x}}</option>
+{% endfor %}
+      </select>
+    </div>
+  </div>
+
+<script>
+new TomSelect("#search-property-types",{
+  create: false,
+//  selectOnTab: true,
+  closeAfterSelect: true,
+  sortField: {
+    field: "text",
+    direction: "asc"
+  }
+});
+</script>
+
+  <hr>
+
+  <div class="mb-3 row">
+    <label for="search-elements" class="col-4 col-form-label">Elements</label>
+    <div class="col-8">
+      <select name="search-elements[]" id="search-elements" multiple>
+{% for x in existing_elements %}
+        <option
+        {% if x in param_args.get('elements') %}
+        selected=selected
+        {% endif %}
+        >{{x}}</option>
+{% endfor %}
+{% for x in unavailable_elements %}
+        <option disabled>{{x}}</option>
+{% endfor %}
+      </select>
+
+<!--
+      <div class="form-check" style="padding-bottom: 0.2em">
+        <input class="form-check-input" type="checkbox" value="1" name="search-elements-match-only-selected" id="search-elements-match-only-selected"
+        {% if request.values.get('search-elements-match-only-selected') %}
+        checked=checked
+        {% endif %}
+        >
+        <label class="form-check-label" for="search-elements-match-only-selected">
+          Match only selected
+        </label>
+      </div>
+-->
+
+    </div>
+  </div>
+
+<script>
+new TomSelect("#search-elements",{
+  maxOptions: null, // default 50
+  create: false,
+//  selectOnTab: true,
+  closeAfterSelect: true,
+  sortField: {
+    field: "text",
+    direction: "asc"
+  }
+});
+</script>
+
+  <div class="mb-3 row">
+    <label class="col-4 col-form-label">Number of Elements</label>
+    <div class="col-4" style="text-align: center">
+      <input type="number" class="form-control" name="search-number-of-elements-min" min="0" value="{{ request.values.get('search-number-of-elements-min', '') }}">
+      Min
+    </div>
+    <div class="col-4" style="text-align: center">
+      <input type="number" class="form-control" name="search-number-of-elements-max" min="0" value="{{ request.values.get('search-number-of-elements-max', '') }}">
+      Max
+    </div>
+  </div>
+
+
+
+
+  <hr>
+
+  <div class="mb-3 row">
+    <label class="col-4 col-form-label">Number of Configurations</label>
+    <div class="col-4" style="text-align: center">
+      <input type="number" class="form-control" name="search-number-of-configurations-min" min="0" value="{{ request.values.get('search-number-of-configurations-min', '') }}">
+      Min
+    </div>
+    <div class="col-4" style="text-align: center">
+      <input type="number" class="form-control" name="search-number-of-configurations-max" min="0" value="{{ request.values.get('search-number-of-configurations-max', '') }}">
+      Max
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <label class="col-4 col-form-label">Number of Atoms</label>
+    <div class="col-4" style="text-align: center">
+      <input type="number" class="form-control" name="search-number-of-atoms-min" min="0" value="{{ request.values.get('search-number-of-atoms-min', '') }}">
+      Min
+    </div>
+    <div class="col-4" style="text-align: center">
+      <input type="number" class="form-control" name="search-number-of-atoms-max" min="0" value="{{ request.values.get('search-number-of-atoms-max', '') }}">
+      Max
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="mb-3 row">
+    <label for="search-sort-by" class="col-4 col-form-label">Sort By</label>
+    <div class="col-8">
+      <select name="search-sort-by" id="search-sort-by">
+      {% for x in [ ["name", "Name"],
+                    ["nconfigurations", "Number of Configurations"],
+                    ["nelements", "Number of Elements"],
+                    ["nsites", "Number of Atoms"],
+                    ["colabfit-id", "ColabFit Short ID"],
+                  ] %}
+        <option value="{{x[0]}}"
+        {% if x[0] == request.values.get('search-sort-by') %}
+        selected=selected
+        {% endif %}
+        >{{x[1]}}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+<script>
+new TomSelect("#search-sort-by",{
+  create: false,
+  closeAfterSelect: true
+});
+</script>
+
+
+  <div class="mb-3 row">
+    <label for="search-sort-direction" class="col-4 col-form-label">Sort Direction</label>
+    <div class="col-8">
+      <select name="search-sort-direction" id="search-sort-direction">
+      {% for x in [ ["ascending", "Ascending"],
+                    ["descending", "Descending"],
+                  ] %}
+        <option value="{{x[0]}}"
+        {% if x[0] == request.values.get('search-sort-direction') %}
+        selected=selected
+        {% endif %}
+        >{{x[1]}}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+<script>
+new TomSelect("#search-sort-direction",{
+  create: false,
+  closeAfterSelect: true
+});
+</script>
+
+  <hr>
+  <a href="/" class="btn btn-secondary">Reset</a>
+
+  <button type="submit" class="btn btn-primary float-end">Search</button>
+</form>

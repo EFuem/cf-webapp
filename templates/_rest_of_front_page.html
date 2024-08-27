@@ -1,0 +1,59 @@
+
+
+<br>
+<!--
+{% include "_periodic-table.html" %}
+
+
+<div class="card">
+  <h5 id="datasets-search-header" class="card-header">Datasets</h5>
+  <div class="card-body">
+    <div id="datasets" style="max-height: 20em; overflow: auto">
+    </div>
+  </div>
+</div>
+-->
+
+
+<script>
+/*  periodic_table_button("Si"); */
+</script>
+
+
+<!--
+<br>
+<hr>
+<h4 style="padding-top: 0.3em">Dataset Atlas
+<span style="padding-left: 0.2em" class="glyphicon glyphicon-question-sign" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="This plot displays dataset connectivity computed using cosine distances between dataset-averaged SOAP vectors. Node size is indicative of dataset size, while edge thickness is indicative of distance >0. Dataset names can be displayed by hovering over nodes."><i class="bi bi-info-circle"></i>
+</span>
+</h4>
+-->
+
+<!--
+<iframe id="pyvis" src="/embed/dataset-pyvis.html" width="100%" height="300em" scrolling="no" seamless="seamless" allow="fullscreen"
+style="padding-bottom: 3em" onload="adjust_pyvis_height()"></iframe>
+
+<script>
+function adjust_pyvis_height() {
+  let e_pyvis = document.getElementById("pyvis");
+  e_pyvis.style.height = `${e_pyvis.contentWindow.document.documentElement.scrollHeight}px`;
+}
+</script>
+-->
+
+<script>
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+</script>
+
+
+
+<br><br>
+
+<div class="row">
+  <div class="col-12">
+    <a class="btn btn-outline-primary btn-lg" style="width: 100%" target=_blank href="https://github.com/colabfit/data-lake/issues/new?assignees=&labels=dataset&projects=&template=submit_dataset.yml&title=%5BDataset+submission%2Frequest%5D%3A+%2A%2AEnter+dataset+name+here%2A%2A">Submit/request data</a>
+  </div>
+</div>
+
+<div style="margin-bottom: 540px"></div>

@@ -1,0 +1,32 @@
+{% extends "layouts/page.html" %}
+{% block content %}
+
+<h3>Property Definitions</h3>
+<hr>
+<br>
+
+<p>The following is a list of all Property Definitions available within ColabFit.</p>
+
+<br>
+<table class="table table-bordered table-sm">
+  <thead>
+    <tr>
+      <th>Property Definition Short Name</th>
+      <th>Title</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+
+{% for e in items %}
+    <tr>
+      <td><a href="/properties/show/{{ e['definition']['property-id'] |j2_filter_property_id_to_urlpath }}">{{ e['definition']['property-name'] }}</a></td>
+      <td>{{ e['definition']['property-title'] }}</td>
+      <td>{{ e['definition']['property-description'] }}</td>
+    </tr>
+{% endfor %}
+
+  </tbody>
+</table>
+
+{% endblock %}

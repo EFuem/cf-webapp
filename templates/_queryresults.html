@@ -1,0 +1,20 @@
+{% if search_performed_but_no_results %}
+<h4 style="margin-bottom: 1em">No Results Found</h5>
+{% endif %}
+
+
+
+
+{% if results %}
+<h4 style="margin-bottom: 1em" id="results">Results: {{ "{:,}".format(number_of_results) }}</h4>
+
+{% for r in results %}
+{% set card_style = loop.cycle('', 'background-color: #eef;') %}
+{% include "_queryresult_new.html" %}
+{% endfor %}
+
+{% if search_parameters_supplied %}
+<script>document.getElementById("results").scrollIntoView({behavior: 'smooth', block: "start", inline: "nearest"});</script>
+{% endif %}
+
+{% endif %}

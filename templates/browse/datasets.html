@@ -1,0 +1,14 @@
+{% extends "layouts/page.html" %}
+{% block content %}
+
+<h3>Datasets</h3>
+<hr>
+<br>
+
+<p>The following is a list of all {{n}}Datasets available within ColabFit.</p>
+
+<script src="{{ url_for('static', filename='js/cache-dataset-' + c + '.js') }}"></script>
+{% include "browse/_browse-paginate-header.html" %}
+
+
+{% endblock %}

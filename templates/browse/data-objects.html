@@ -1,0 +1,29 @@
+{% extends "layouts/page.html" %}
+{% block content %}
+
+<h3>Data Objects</h3>
+<hr>
+<br>
+
+<p>The following is a list of all Data Objects available within ColabFit.</p>
+
+<br>
+<table class="table table-bordered table-sm">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for item in items %}
+    <tr>
+      <td><a class="font-monospace" href="/id/{{ item['colabfit-id'] }}">{{ item['colabfit-id'] }}</a></td>
+      <td>{{ item['chemical_formula_hill'] }}</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "layouts/page.html" %}
+{% block content %}
+
+<h3>Configurations</h3>
+<hr>
+<br>
+
+<p>The following is a list of all Configurations available within ColabFit. (500 entry limit)</p>
+
+<br>
+<table class="table table-bordered table-sm">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Names</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for item in items %}
+    <tr>
+      <td><a class="font-monospace" href="/id/{{ item['colabfit-id'] }}">{{ item['colabfit-id'] }}</a></td>
+      <td>{{ ", ".join( item['names'] ) }}</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

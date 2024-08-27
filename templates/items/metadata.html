@@ -1,0 +1,87 @@
+{% extends "layouts/item.html" %}
+{% block content %}
+
+<h3>Metadata</h3>
+<h3>{{ item['colabfit-id'] }}</h3>
+<hr>
+<br>
+
+
+<br>
+<table class="table table-bordered table-sm">
+  <tbody>
+    <tr>
+      <th>ColabFit ID</th>
+      <td class="font-monospace"><a href="/id/{{ item['colabfit-id'] }}">{{ item['colabfit-id'] }}</a></td>
+    </tr>
+{% if data_object_ids %}
+    <tr>
+  <th>Data Objects</th>
+  <td class="font-monospace">
+{% if data_objects_ids|length > 10000 %}
+Too many to display
+{% else %}
+<div style="overflow: auto; max-height: 20em; display: none;" id="list-of-property-instances">
+{% for id in data_object_ids %}
+<a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+</div>
+<button id="btn-show-data-objects"
+  onclick="show_hide_list('list-of-property-instances', this)"
+  class="btn btn-outline-primary">Show Property Instances</button>
+      </td>
+
+{% endif %}
+    </tr>
+{% endif %}
+
+{% if property_instance_ids %}
+    <tr>
+      <th>Property Instances</th>
+      <td class="font-monospace">
+{% if property_instance_ids|length > 10000 %}
+Too many to display
+{% else %}
+<div style="overflow: auto; max-height: 20em; display: none;" id="list-of-property-instances">
+{% for id in property_instance_ids %}
+<a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+</div>
+<button id="btn-show-property-instances"
+        onclick="show_hide_list('list-of-property-instances', this)"
+        class="btn btn-outline-primary">Show Property Instances</button>
+      </td>
+{% endif %}
+    </tr>
+{% endif %}
+
+{% if configuration_ids %}
+    <tr>
+      <th>Configurations</th>
+      <td class="font-monospace">
+{% if configuration_ids|length > 10000 %}
+Too many to display
+{% else %}
+<div style="overflow: auto; max-height: 20em; display: none;" id="list-of-configurations">
+{% for id in configuration_ids %}
+<a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+</div>
+<button id="btn-show-configurations"
+        onclick="show_hide_list('list-of-configurations', this)"
+        class="btn btn-outline-primary">Show Configurations</button>
+      </td>
+{% endif %}
+    </tr>
+{% endif %}
+
+    <tr>
+      <th>Files</th>
+      <td>
+        <a href="/files/{{ item['colabfit-id'] }}/colabfitspec.json">colabfitspec.json</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+<div class="card px-0" style="margin-bottom: 2em;">
+  <h5 class="card-header"
+  style="{{ card_style }}"
+  ><a href="/id/{{ r['colabfit-id'] }}" target=_blank>{{ r['name'] }}</a></h5>
+  <div class="card-body">
+
+<a  class="btn btn-primary btn-sm float-end"
+    style="margin-left: 1em"
+    id="download-dataset-archive"
+    href="https://materials.colabfit.org/dataset-xyz/{{ r['extended-id'] }}.xyz.xz" rel="nofollow noindex">Download Dataset XYZ file</a>
+
+<b>Description:</b> {{ r['description'] }}<br>
+<br>
+<b>ColabFit ID:</b> {{ r['extended-id'] }}<br>
+<b>Name:</b> {{ r['name'] }}<br>
+<b>Authors:</b> {{ r['authors']|join(', ') }}<br>
+<b>Elements</b>: {{ r['aggregated_info']['elements']|join(', ') }}<br>
+<b>Number of Configurations</b>: {{ "{:,}".format( r['aggregated_info']['nconfigurations'] ) }}<br>
+<b>Number of Elements</b>: {{ r['aggregated_info']['nelements'] }}<br>
+<b>Number of Atoms</b>: {{ "{:,}".format( r['aggregated_info']['nsites'] ) }}<br>
+<b>Property Types</b>: {{ r['aggregated_info']['property_types']|join(', ') }}<br>
+
+<br>
+<b>Links:</b><br>
+{% if r['links']['source-data'] %}
+<a target=_blank href="{{r['links']['source-data']}}">{{r['links']['source-data']}}</a><br>
+{% endif %}
+
+{% if r['links']['source-publication'] %}
+<a target=_blank href="{{r['links']['source-publication']}}">{{r['links']['source-publication']}}</a><br>
+{% endif %}
+
+{% if r['links']['other'] %}
+{% for s in r['links']['other'] %}
+<a target=_blank href="{{s}}">{{s}}</a><br>
+{% endfor %}
+{% endif %}
+
+
+
+  </div>
+</div>

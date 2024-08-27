@@ -1,0 +1,64 @@
+{% extends "layouts/page.html" %}
+{% block content %}
+
+<div class="row" style="margin-top: -2em;">
+
+<div class="col-md-12">
+<table style="margin-top: 2em">
+  <tr>
+    <td><img style="width: 80px" src="https://colabfit.org/images/colabfit-logo.svg"></td>
+    <td style="padding-left: 20px"><span style="font-size: 32px; font-weight: 600;">The ColabFit Exchange: Data for Advanced Materials Science</span></td>
+  </tr>
+</table>
+<br>
+
+
+<p>Welcome to the ColabFit Exchange! This is an online resource for the
+discovery, exploration and submission of datasets for data-driven
+interatomic potential (DDIP) development for materials science and
+chemistry applications. ColabFit's goal is to increase the Findability,
+Accessibility, Interoperability, and Reusability (FAIR) of DDIP data by
+providing convenient access to well-curated and standardized
+first-principles and experimental datasets. Content on the ColabFit
+Exchange is open source and freely available.</p>
+
+
+</div>
+</div>
+
+
+{% include "_four_items.html" %}
+
+<a  class="btn btn-primary btn-sm"
+    target=_blank
+    href="https://github.com/colabfit/data-lake/issues" rel="nofollow noindex">See Upload Queue</a><br>
+
+<script>
+{% include "_periodic-table.js" %}
+</script>
+
+<div class="row" style="margin-top: 1em;">
+<div class="col-12 col-lg-4" style="margin-bottom: 1em;">
+<div style="border: 2px solid black; padding: 1em;">
+<h4 style="margin-bottom: 1em">Filter Datasets By:</h4>
+{% include "_queryform.html" %}
+</div>
+</div>
+
+
+<div class="col-12 col-lg-8">
+
+<div style="max-height: 60em; overflow: auto; padding: 1em;
+{% if search_performed_but_no_results or results %}
+background: #eee;
+{% endif %}
+">
+{% include "_queryresults.html" %}
+</div>
+</div> <!-- col-8 -->
+
+</div> <!-- row -->
+
+{% include "_rest_of_front_page.html" %}
+
+{% endblock %}

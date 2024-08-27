@@ -1,0 +1,81 @@
+{% extends "layouts/item.html" %}
+{% block content %}
+
+<h3>Configuration Set</h3>
+<h3>{{ item['extended-id'] }}</h3>
+<hr>
+<br>
+
+
+<br>
+<table class="table table-bordered table-sm">
+  <tbody>
+    <tr>
+      <th>Name</th>
+      <td>{{ item['name'] }}</td>
+    </tr>
+    <tr>
+      <th>Extended ID</th>
+      <td class="font-monospace"><a href="/id/{{ item['colabfit-id'] }}">{{ item['extended-id'] }}</a></td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td>{{ item['description'] }}</td>
+    </tr>
+    <tr>
+      <th>Elements</th>
+      <td style="white-space: nowrap;">
+{% for k,v in item['aggregated_info']['total_elements_ratios'].items() %}
+{{k}} ({{(v*100)|round(2)}}%)<br>
+{% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <th>Number of Configurations</th>
+      <td>{{ "{:,}".format( item['aggregated_info']['nconfigurations'] ) }}</td>
+    </tr>
+    <tr>
+      <th>Number of Atoms</th>
+      <td>{{ "{:,}".format( item['aggregated_info']['nsites'] ) }}</td>
+    </tr>
+    <tr>
+      <th>Configurations</th>
+      <td class="font-monospace">
+{% if configuration_ids|length < 15 %}
+{% for id in configuration_ids %}
+        <a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+{% else %}
+<div style="overflow: auto; max-height: 20em; display: none;" id="list-of-configurations">
+{% for id in configuration_ids %}
+<a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+</div>
+<button id="btn-show-configurations"
+        onclick="show_hide_list('list-of-configurations', this)"
+        class="btn btn-outline-primary">Show Configurations</button>
+{% endif %}
+      </td>
+    </tr>
+    <tr>
+      <th>Datasets</th>
+      <td class="font-monospace">
+{% for id in dataset_ids %}
+        <a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <th>ColabFit ID</th>
+      <td class="font-monospace"><a href="/id/{{ item['colabfit-id'] }}">{{ item['colabfit-id'] }}</a></td>
+    </tr>
+    <tr>
+      <th>Files</th>
+      <td>
+        <a href="/files/{{ item['colabfit-id'] }}/colabfitspec.json">colabfitspec.json</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

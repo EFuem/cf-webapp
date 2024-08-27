@@ -1,0 +1,64 @@
+{% extends "layouts/item.html" %}
+{% block content %}
+
+<h3>Data Object</h3>
+<h3>{{ item['colabfit-id'] }}</h3>
+<hr>
+<br>
+
+
+<br>
+<table class="table table-bordered table-sm">
+  <tbody>
+    <tr>
+      <th>ColabFit ID</th>
+      <td class="font-monospace"><a href="/id/{{ item['colabfit-id'] }}">{{ item['colabfit-id'] }}</a></td>
+    </tr>
+{% include "items/rows/_chemical_formula_hill.html" %}
+    <tr>
+      <th>Property Types</th>
+      <td class="font-monospace">
+{% for e in item['property_types'] %}
+{{ e }}<br>
+{% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <th>Configuration</th>
+      <td class="font-monospace"><a href="/id/{{ configuration_id }}">{{ configuration_id }}</a></td>
+    </tr>
+    <tr>
+      <th>Property Instances</th>
+      <td class="font-monospace">
+{% for id in property_instance_ids %}
+        <a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <th>Datasets</th>
+      <td class="font-monospace">
+{% for id in dataset_ids %}
+        <a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <th>Metadata</th>
+      <td class="font-monospace">
+{% for id in metadata_ids %}
+  <a href="/id/{{id}}">{{id}}</a><br>
+{% endfor %}
+      </td>
+    </tr>
+    </tr>
+    <tr>
+      <th>Files</th>
+      <td>
+        <a href="/files/{{ item['colabfit-id'] }}/colabfitspec.json">colabfitspec.json</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

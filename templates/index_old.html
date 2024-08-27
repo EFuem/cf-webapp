@@ -1,0 +1,48 @@
+{% extends "layouts/page.html" %}
+{% block content %}
+
+
+<div class="col-sm-4">
+  <div class="card">
+  <div class="card-header">
+    <h5 style="margin-bottom: 0">ColabFit Data</h5>
+  </div>
+
+    <ul class="list-group list-group-flush">
+
+<!--
+              ["data-objects", "Data Objects (DO)", data_object_count],
+              ["property-instances", "Property Instances (PI)", property_instance_count],
+              ["configurations", "Configurations (CO)", configuration_count],
+-->
+
+{#
+{% for e in [ ["datasets", "Datasets (DS)", 48],
+              ["datasets-oc20is2re", "Datasets (DS) - OC20 IS2RE"],
+              ["datasets-oc20md", "Datasets (DS) - OC20 MD"],
+              ["datasets-oc20rattled", "Datasets (DS) - OC20 Rattled"],
+              ["datasets-oc20s3ef", "Datasets (DS) - OC20 S3EF"],
+              ["configuration-sets", "Configuration Sets (CS)", 1032],
+              ["configuration-sets-oc20is2re", "Configuration Sets (CS) - OC20 IS2RE"],
+              ["configuration-sets-oc20md", "Configuration Sets (CS) - OC20 MD"],
+              ["configuration-sets-oc20rattled", "Configuration Sets (CS) - OC20 Rattled"],
+              ["configuration-sets-oc20s3ef", "Configuration Sets (CS) - OC20 S3EF"],
+              ["property-definitions", "Property Definitions", property_definition_count]] %}
+#}
+{% for e in [ ["datasets", "Datasets (DS)", dataset_count],
+              ["configuration-sets", "Configuration Sets (CS)", configuration_set_count],
+              ["property-definitions", "Property Definitions", property_definition_count]] %}
+<li class="list-group-item d-flex justify-content-between align-items-center">
+  <a href="/browse/{{e[0]}}">{{e[1]}}</a>
+  {% if e[2] %}
+  <span id="model-driver-count" class="badge bg-info">{{ "{:,}".format( e[2] ) }}</span>
+  {% endif %}
+</li>
+{% endfor %}
+
+    </ul>
+  </div>
+</div>
+
+
+{% endblock %}
